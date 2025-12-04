@@ -1,4 +1,5 @@
 import { Card } from "@/components/card/Card";
+import { Section } from "@/components/section/Section";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +9,13 @@ export const metadata: Metadata = {
 export default function PageHome() {
   return (
     <main>
-      <Card
+
+      <Section />
+
+
+
+
+      {/* <Card
         href="/cursos/123"
         image="https://i.ytimg.com/vi/SVepTuBK4V0/hqdefault.jpg"
         title="Curso de API Rest, Node e TypeScript"
@@ -43,7 +50,7 @@ export default function PageHome() {
                     CODARSE - Introdução e apresentação do projeto
                     #typescript #cursotypescript #javascript #cursodejavascript #reactetypescript #learningtypescript #learningjavascript  
         `}
-      />
+      /> */}
     </main>
   );
 }
