@@ -1,5 +1,10 @@
+import { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "CodarSe - Página inicial"
+};
+
+export default function PageHome() {
   return (
     <main>
       Home
