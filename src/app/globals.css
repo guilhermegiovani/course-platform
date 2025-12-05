@@ -27,6 +27,10 @@
     --color-primary-contrast: #ffffff;
 } */
 
+* {
+    @apply outline-primary -outline-offset-2
+}
+
 html, body {
     overflow: overlay;
     @apply bg-background text-text w-screen h-screen underline-offset-8
