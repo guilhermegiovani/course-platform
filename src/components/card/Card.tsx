@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-interface ICardProps {
+export interface ICardProps {
     href: string,
     image: string,
     title: string,
@@ -31,7 +31,7 @@ export const Card = ({title, description, image, href}: ICardProps) => {
                 },
                 */}
                 <h4 className="font-extrabold text-lg">{title}</h4>
-                <p className="line-clamp-3 sm:line-clamp-4">
+                <p className="line-clamp-3 sm:line-clamp-4 md:line-clamp-5">
                     {description}
                 </p>
             </article>
