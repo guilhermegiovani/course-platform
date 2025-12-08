@@ -1,6 +1,5 @@
 import { Section } from "@/components/section/Section";
 import { Metadata } from "next";
-import { describe } from "node:test";
 
 export const metadata: Metadata = {
     title: "CodarSe - Todos os cursos"
