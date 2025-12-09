@@ -29,11 +29,18 @@ export default async function PageCourseDetail({ params }: Props) {
                 )}
             >
                 <StartCourse
+                    title="🎩 Curso de Figma para DEVs"
                     idCourse="1"
                     idClass="1"
                     imageUrl="https://i.ytimg.com/vi/SVepTuBK4V0/hqdefault.jpg"
                 />
 
+                <CourseHeader />
+                <CourseHeader />
+                <CourseHeader />
+                <CourseHeader />
+                <CourseHeader />
+                <CourseHeader />
                 <CourseHeader />
                 {/* Detalhe do curso {id} */}
             </div>
