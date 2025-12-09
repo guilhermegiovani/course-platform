@@ -24,24 +24,28 @@ export default async function PageCourseDetail({ params }: Props) {
         <main className="mt-8 flex justify-center">
             <div
                 className={clsx(
-                    "w-full min-[880px]:max-w-[880px] px-2",
-                    "flex flex-col gap-4"
+                    "w-full min-[880px]:max-w-[880px] px-2 lg:px-0",
+                    "flex flex-col gap-4 md:flex-row-reverse"
                 )}
             >
-                <StartCourse
-                    title="🎩 Curso de Figma para DEVs"
-                    idCourse="1"
-                    idClass="1"
-                    imageUrl="https://i.ytimg.com/vi/SVepTuBK4V0/hqdefault.jpg"
-                />
+                <div className="flex-1">
+                    <StartCourse
+                        title="🎩 Curso de Figma para DEVs"
+                        idCourse="1"
+                        idClass="1"
+                        imageUrl="https://i.ytimg.com/vi/SVepTuBK4V0/hqdefault.jpg"
+                    />
+                </div>
 
-                <CourseHeader />
-                <CourseHeader />
-                <CourseHeader />
-                <CourseHeader />
-                <CourseHeader />
-                <CourseHeader />
-                <CourseHeader />
+                <div className="flex-2">
+                    <CourseHeader />
+                    <CourseHeader />
+                    <CourseHeader />
+                    <CourseHeader />
+                    <CourseHeader />
+                    <CourseHeader />
+                    <CourseHeader />
+                </div>
                 {/* Detalhe do curso {id} */}
             </div>
         </main>
