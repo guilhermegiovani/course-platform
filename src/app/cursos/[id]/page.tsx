@@ -3,6 +3,7 @@ import { CourseHeader } from "@/components/course-header/CourseHeader";
 import { StartCourse } from "@/components/startcourse/StartCourse";
 import clsx from "clsx";
 import { Class } from "@/components/course-content/components/Class";
+import { ClassGroup } from "@/components/course-content/components/ClassGroup";
 
 interface Props {
     params: Promise<{ id: string }>
@@ -38,12 +39,16 @@ export default async function PageCourseDetail({ params }: Props) {
                     />
                 </div>
 
-                <div className="flex-2">
+                <div className="flex-2 flex flex-col gap-4">
                     <CourseHeader />
                    
-                    <Class
-                        title="NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
-                        playerUrl="/player/{courseId}/{classId}"
+                    <ClassGroup
+                        title="Introdução e apresentação do projeto"
+                        courseId="123"
+                        classes={[
+                            {id: '234', title: 'NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto'},
+                            {id: '235', title: 'NextJS, TailwindCSS e Typescript: #01 - Apresentação do protótipo'}
+                        ]}
                     />
                 </div>
                 {/* Detalhe do curso {id} */}
