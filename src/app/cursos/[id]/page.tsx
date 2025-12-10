@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { CourseHeader } from "@/components/course-header/CourseHeader";
 import { StartCourse } from "@/components/startcourse/StartCourse";
 import clsx from "clsx";
+import { Class } from "@/components/course-content/components/Class";
 
 interface Props {
     params: Promise<{ id: string }>
@@ -39,12 +40,11 @@ export default async function PageCourseDetail({ params }: Props) {
 
                 <div className="flex-2">
                     <CourseHeader />
-                    <CourseHeader />
-                    <CourseHeader />
-                    <CourseHeader />
-                    <CourseHeader />
-                    <CourseHeader />
-                    <CourseHeader />
+                   
+                    <Class
+                        title="NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
+                        playerUrl="/player/{courseId}/{classId}"
+                    />
                 </div>
                 {/* Detalhe do curso {id} */}
             </div>

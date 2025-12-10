@@ -12,8 +12,8 @@ export interface ICardProps {
 export const Card = ({title, description, image, href}: ICardProps) => {
 
     return (
-        <Link href={href} className="">
-            <article className="flex flex-col gap-2 p-2 rounded hover:no-underline sm:hover:bg-primary">
+        <Link href={href} className="hover:no-underline!">
+            <article className="flex flex-col gap-2 p-2 rounded sm:hover:bg-primary">
                 { /* img */}
                 <Image
                     width={1000}

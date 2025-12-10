@@ -35,7 +35,7 @@ export const StartCourse = ({ title, idCourse, idClass, imageUrl }: IStartCourse
 
                 <Link
                     href={`/player/${idCourse}/${idClass}`}
-                    className="bg-primary py-2 px-3 rounded text-center hover:no-underline"
+                    className="bg-primary py-2 px-3 rounded text-center hover:no-underline!"
                 >
                     Começar curso
                 </Link>
@@ -49,7 +49,7 @@ export const StartCourse = ({ title, idCourse, idClass, imageUrl }: IStartCourse
 
                     <Link
                         href={`/player/${idCourse}/${idClass}`}
-                        className="bg-primary py-2 px-3 rounded text-center hover:no-underline"
+                        className="bg-primary py-2 px-3 rounded text-center hover:no-underline!"
                     >
                         Começar curso
                     </Link>
