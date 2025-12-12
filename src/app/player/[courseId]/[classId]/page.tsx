@@ -1,3 +1,4 @@
+import { PlayerHeader } from "@/components/player"
 
 
 interface Props {
@@ -12,6 +13,11 @@ export default async function PagePlayer({ params }: Props) {
 
     return (
         <>
+            <PlayerHeader
+                title="NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
+                subtitle="🔔 NextJS, TailwindCSS e Typescript"
+            />
+
             Player / {courseId} / {classId}
         </>
     )
