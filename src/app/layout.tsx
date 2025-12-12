@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 
 import "./globals.css";
-import { Header } from "@/components/header/Header";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -27,7 +26,6 @@ export default function RootLayout({ children }: Readonly<{children: React.React
       <body
         className={`${nunito.className} antialiased`}
       >
-        <Header />
         {children}
       </body>
     </html>
