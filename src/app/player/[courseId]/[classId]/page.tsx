@@ -1,31 +1,51 @@
 'use client'
-import { PlayerClass, PlayerHeader } from "@/components/player"
-
+import { PlayerClassGroup, PlayerHeader } from "@/components/player"
 
 interface Props {
-    params: Promise<{
+    params: {
         courseId: string,
         classId: string
-    }>
+    }
 }
 
-export default async function PagePlayer({ params }: Props) {
-    const { courseId, classId } = await params
+export default function PagePlayer({ params: { courseId, classId } }: Props) {
+    
 
     return (
-        <>
+        <main className="flex flex-col gap-20">
             <PlayerHeader
                 title="NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
                 subtitle="🔔 NextJS, TailwindCSS e Typescript"
             />
 
-            <PlayerClass
-                title="NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
-                playing={true}
-                done={false}
-                onCheck={() => console.log("check")}
-                onPlay={() => console.log("play")}
+            <PlayerClassGroup
+                open={true}
+                position={1}
+                title="Introdução e apresentação do projeto"
+                onToggle={() => console.log("toggle")}
+                classes={[
+                    {
+                        done: true,
+                        playing: false,
+                        title: "NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
+                    },
+                    {
+                        done: false,
+                        playing: true,
+                        title: "NextJS, TailwindCSS e Typescript: #02 - Apresentação do projeto"
+                    },
+                    {
+                        done: false,
+                        playing: false,
+                        title: "NextJS, TailwindCSS e Typescript: #03 - Apresentação do projeto"
+                    },
+                    {
+                        done: false,
+                        playing: false,
+                        title: "NextJS, TailwindCSS e Typescript: #04 - Apresentação do projeto"
+                    },
+                ]}
             />
-        </>
+        </main>
     )
 }
