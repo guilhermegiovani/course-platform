@@ -14,10 +14,14 @@ export const PlayerVideoPlayer = ({ videoId }: IPlayerVideoPlayerProps) => {
 
 
     return (
-        <>
+        <div className='h-full'>
             <ReactPlayer
+                height="100%"
+                width="100%"
+                playing={true}
+                controls={true}
                 src={`https://www.youtube.com/watch?v=${videoId}`}
             />
-        </>
+        </div>
     )
 }
