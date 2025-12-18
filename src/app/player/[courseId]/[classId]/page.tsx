@@ -1,5 +1,5 @@
 'use client'
-import { PlayerClassGroup, PlayerHeader, PlayerPlaylist } from "@/components/player"
+import { PlayerHeader, PlayerPlaylist, PlayerVideoPlayer } from "@/components/player"
 import { useParams } from "next/navigation"
 
 // interface Props {
@@ -30,7 +30,7 @@ export default function PagePlayer() {
                         playingCourseId={courseId}
                         classGroups={[
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "1 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -55,7 +55,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "2 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -80,7 +80,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "3 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -105,7 +105,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "4 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -130,7 +130,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "5 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -155,7 +155,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "6 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -180,7 +180,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "7 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -205,7 +205,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "8 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -230,7 +230,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "9 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -255,7 +255,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "10 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -280,7 +280,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "11 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-00',
@@ -305,7 +305,7 @@ export default function PagePlayer() {
                                 ]
                             },
                             {
-                                title: "Introdução e apresentação do projeto",
+                                title: "12 - Introdução e apresentação do projeto",
                                 classes: [
                                     {
                                         classId: 'aula-04',
@@ -335,7 +335,9 @@ export default function PagePlayer() {
                 </div>
 
                 <div className="flex-1">
-                    Player
+                    <PlayerVideoPlayer
+                        videoId='bP47qRVRqQs'
+                    />
                 </div>
             </div>
         </main>
