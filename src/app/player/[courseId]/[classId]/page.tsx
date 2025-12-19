@@ -338,6 +338,7 @@ export default function PagePlayer() {
                     <div className="flex-1 aspect-video">
                         <PlayerVideoPlayer
                             videoId='bP47qRVRqQs'
+                            onPlayNext={() => console.log("next")}
                         />
                     </div>
                 </div>
