@@ -1,11 +1,11 @@
 'use client'
-import { useRouter } from "next/navigation"
-import { PlayerVideoPlayer } from "./components/PlayerVideoPlayer"
 import { IPlayerClassGroupProps } from "../playlist/components/PlayerClassGroup"
-import { useMemo } from "react"
-import * as Tabs from "@radix-ui/react-tabs";
-import clsx from "clsx"
+import { PlayerVideoPlayer, PlayerClassHeader } from "@/components/player"
 import { CourseHeader } from "@/components/course-header/CourseHeader"
+import * as Tabs from "@radix-ui/react-tabs";
+import { useRouter } from "next/navigation"
+import { useMemo } from "react"
+import clsx from "clsx"
 
 interface IPlayerClassDetailsProps {
     course: {
@@ -14,12 +14,17 @@ interface IPlayerClassDetailsProps {
         numberOfClasses: number
     }
 
+    classItem: {
+        title: string
+        description: string
+    }
+
     playingClassId: string
     playingCourseId: string
     classGroups: Pick<IPlayerClassGroupProps, 'classes' | 'title'>[]
 }
 
-export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups, course }: IPlayerClassDetailsProps) => {
+export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups, course, classItem }: IPlayerClassDetailsProps) => {
 
     const router = useRouter()
 
@@ -80,10 +85,13 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                     </Tabs.Trigger>
                 </Tabs.List>
 
-                <hr className="border-paper" />
+                <hr className="border-paper mb-2" />
 
                 <Tabs.Content value="class-details">
-                    Detalhes da aula
+                    <PlayerClassHeader
+                        title={classItem.title}
+                        description={classItem.description}
+                    />
                 </Tabs.Content>
 
                 <Tabs.Content value="class-comments">

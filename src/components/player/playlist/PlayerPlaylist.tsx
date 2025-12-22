@@ -29,31 +29,6 @@ export const PlayerPlaylist = ({ classGroups, playingClassId, playingCourseId }:
                     <li key={classGroup.title}>
                         <PlayerClassGroup
                             {...classGroup}
-                            // open={true}
-                            // position={1}
-                            // title="Introdução e apresentação do projeto"
-                            // classes={[
-                            //     {
-                            //         done: true,
-                            //         playing: false,
-                            //         title: "NextJS, TailwindCSS e Typescript: #00 - Apresentação do projeto"
-                            //     },
-                            //     {
-                            //         done: false,
-                            //         playing: true,
-                            //         title: "NextJS, TailwindCSS e Typescript: #02 - Apresentação do projeto"
-                            //     },
-                            //     {
-                            //         done: false,
-                            //         playing: false,
-                            //         title: "NextJS, TailwindCSS e Typescript: #03 - Apresentação do projeto"
-                            //     },
-                            //     {
-                            //         done: false,
-                            //         playing: false,
-                            //         title: "NextJS, TailwindCSS e Typescript: #04 - Apresentação do projeto"
-                            //     },
-                            // ]}
                             playingClassId={playingClassId}
 
                             position={index+1}
