@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation"
 import { PlayerVideoPlayer } from "./components/PlayerVideoPlayer"
 import { IPlayerClassGroupProps } from "../playlist/components/PlayerClassGroup"
 import { useMemo } from "react"
+import * as Tabs from "@radix-ui/react-tabs";
+import clsx from "clsx"
 
 interface IPlayerClassDetailsProps {
     playingClassId: string
@@ -38,9 +40,53 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                 />
             </div>
 
-            <div>
-                Descrição
-            </div>
+            <Tabs.Root defaultValue="class-details">
+                <Tabs.List className="flex gap-4">
+                    <Tabs.Trigger
+                        value="class-details"
+                        className={clsx(
+                            "p-2 flex items-center justify-center",
+                            "border-b-4 border-transparent data-[state=active]:border-primary cursor-pointer"
+                        )}
+                    >
+                        Visão geral
+                    </Tabs.Trigger>
+
+                    <Tabs.Trigger
+                        value="class-comments"
+                        className={clsx(
+                            "p-2 flex items-center justify-center",
+                            "border-b-4 border-transparent data-[state=active]:border-primary cursor-pointer"
+                        )}
+                    >
+                        Comentários
+                    </Tabs.Trigger>
+
+                    <Tabs.Trigger
+                        value="course-details"
+                        className={clsx(
+                            "p-2 flex items-center justify-center",
+                            "border-b-4 border-transparent data-[state=active]:border-primary cursor-pointer"
+                        )}
+                    >
+                        Visão geral do curso
+                    </Tabs.Trigger>
+                </Tabs.List>
+
+                <hr className="border-paper" />
+
+                <Tabs.Content value="class-details">
+                    Detalhes da aula
+                </Tabs.Content>
+
+                <Tabs.Content value="class-comments">
+                    Comentários da aula
+                </Tabs.Content>
+
+                <Tabs.Content value="course-details">
+                    Detalhes do curso
+                </Tabs.Content>
+            </Tabs.Root>
         </div>
     )
 }
