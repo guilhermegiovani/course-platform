@@ -5,14 +5,21 @@ import { IPlayerClassGroupProps } from "../playlist/components/PlayerClassGroup"
 import { useMemo } from "react"
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx"
+import { CourseHeader } from "@/components/course-header/CourseHeader"
 
 interface IPlayerClassDetailsProps {
+    course: {
+        title: string
+        description: string
+        numberOfClasses: number
+    }
+
     playingClassId: string
     playingCourseId: string
     classGroups: Pick<IPlayerClassGroupProps, 'classes' | 'title'>[]
 }
 
-export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups }: IPlayerClassDetailsProps) => {
+export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups, course }: IPlayerClassDetailsProps) => {
 
     const router = useRouter()
 
@@ -32,7 +39,7 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
     }, [classGroups, playingClassId])
 
     return (
-        <div className="flex-1">
+        <div className="flex-1 overflow-auto pb-10">
             <div className="flex-1 aspect-video">
                 <PlayerVideoPlayer
                     videoId='bP47qRVRqQs'
@@ -84,7 +91,11 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                 </Tabs.Content>
 
                 <Tabs.Content value="course-details">
-                    Detalhes do curso
+                    <CourseHeader
+                        title={course.title}
+                        description={course.description}
+                        numberOfClasses={course.numberOfClasses}
+                    />
                 </Tabs.Content>
             </Tabs.Root>
         </div>
