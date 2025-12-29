@@ -6,6 +6,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/navigation"
 import { useMemo, useRef } from "react"
 import clsx from "clsx"
+import { Comments } from "./components/comments/Comments";
 
 interface IPlayerClassDetailsProps {
     course: {
@@ -96,7 +97,7 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
 
                 <hr className="border-paper mb-2" />
 
-                <Tabs.Content value="class-details">
+                <Tabs.Content value="class-details" className="px-2">
                     <PlayerClassHeader
                         title={classItem.title}
                         description={classItem.description}
@@ -104,11 +105,11 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                     />
                 </Tabs.Content>
 
-                <Tabs.Content value="class-comments">
-                    Comentários da aula
+                <Tabs.Content value="class-comments" className="px-2">
+                    <Comments />
                 </Tabs.Content>
 
-                <Tabs.Content value="course-details">
+                <Tabs.Content value="course-details" className="px-2">
                     <CourseHeader
                         title={course.title}
                         description={course.description}
