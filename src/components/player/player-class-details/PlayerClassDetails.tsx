@@ -1,10 +1,10 @@
 'use client'
 import { IPlayerClassGroupProps } from "../playlist/components/PlayerClassGroup"
-import { PlayerVideoPlayer, PlayerClassHeader } from "@/components/player"
+import { PlayerVideoPlayer, PlayerClassHeader, IPlayerVideoPlayerRef } from "@/components/player"
 import { CourseHeader } from "@/components/course-header/CourseHeader"
 import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/navigation"
-import { useMemo } from "react"
+import { useMemo, useRef } from "react"
 import clsx from "clsx"
 
 interface IPlayerClassDetailsProps {
@@ -25,8 +25,11 @@ interface IPlayerClassDetailsProps {
 }
 
 export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups, course, classItem }: IPlayerClassDetailsProps) => {
-
     const router = useRouter()
+
+    const playerVideoPlayerRef = useRef<IPlayerVideoPlayerRef>(null)
+
+    // playerVideoPlayerRef.current?.setProgress
 
     const nextClassId = useMemo(() => {
         const classes = classGroups.flatMap(classGroup => classGroup.classes)
@@ -45,8 +48,14 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
 
     return (
         <div className="flex-1 overflow-auto pb-10">
+
+            {/* <button onClick={() => playerVideoPlayerRef.current?.setProgress(120)}>
+                Avançar
+            </button> */}
+
             <div className="flex-1 aspect-video">
                 <PlayerVideoPlayer
+                    ref={playerVideoPlayerRef}
                     videoId='bP47qRVRqQs'
                     onPlayNext={() => nextClassId ? router.push(`/player/${playingCourseId}/${nextClassId}`) : {}}
                 />
@@ -91,6 +100,7 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                     <PlayerClassHeader
                         title={classItem.title}
                         description={classItem.description}
+                        onTimeClick={seconds => playerVideoPlayerRef.current?.setProgress(seconds)}
                     />
                 </Tabs.Content>
 

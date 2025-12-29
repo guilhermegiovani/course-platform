@@ -2,21 +2,27 @@
 
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useMemo, useState } from 'react'
+import { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { MdPlayCircle } from 'react-icons/md'
+import type TReactPlayer from 'react-player'
 
 
 //import ReactPlayer from 'react-player'
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
-
 
 interface IPlayerVideoPlayerProps {
     videoId: string
 
     onPlayNext: () => void
 }
+export interface IPlayerVideoPlayerRef {
+    setProgress: (second: number) => void
+}
 
-export const PlayerVideoPlayer = ({ videoId, onPlayNext }: IPlayerVideoPlayerProps) => {
+// eslint-disable-next-line react/display-name
+export const PlayerVideoPlayer = forwardRef<IPlayerVideoPlayerRef, IPlayerVideoPlayerProps>(({ videoId, onPlayNext }, playerRefToForward) => {
+    const playerRef = useRef<TReactPlayer>()
+    const wrapperRef = useRef<HTMLDivElement>(null)
 
     const [totalDuration, setTotalDuration] = useState<number | undefined>(undefined)
     const [progress, setProgress] = useState<number | undefined>(undefined)
@@ -33,9 +39,18 @@ export const PlayerVideoPlayer = ({ videoId, onPlayNext }: IPlayerVideoPlayerPro
         return !!secondsUntilEnd && secondsUntilEnd <= 30
     }, [secondsUntilEnd])
 
+    useImperativeHandle(playerRefToForward, () => {
+        return {
+            setProgress(seconds) {
+                playerRef.current?.seekTo(seconds, 'seconds')
+                wrapperRef.current?.scrollIntoView({behavior: 'smooth'})
+            }
+        }
+    })
+
 
     return (
-        <div className='h-full'>
+        <div ref={wrapperRef} className='h-full'>
             {showNextButton && (
                 <button
                     onClick={onPlayNext}
@@ -51,12 +66,15 @@ export const PlayerVideoPlayer = ({ videoId, onPlayNext }: IPlayerVideoPlayerPro
             )}
 
             <ReactPlayer
+                // ref={playerRef}
                 height="100%"
                 width="100%"
                 // playing={true}
                 controls={true}
 
                 onEnded={() => onPlayNext()}
+                onReady={(ref) => playerRef.current = ref}
+
                 onProgress={({ playedSeconds }) => setProgress(playedSeconds)}
                 onDuration={(duration) => setTotalDuration(duration)}
 
@@ -65,4 +83,4 @@ export const PlayerVideoPlayer = ({ videoId, onPlayNext }: IPlayerVideoPlayerPro
             />
         </div>
     )
-}
+})
