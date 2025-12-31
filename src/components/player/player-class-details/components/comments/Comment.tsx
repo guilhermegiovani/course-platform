@@ -15,7 +15,7 @@ export const Comment = ({ }: ICommentProps) => {
                 draggable={false}
                 className="rounded-full"
 
-                // src={}
+                src={"https://developers.google.com/youtube/v3/docs?hl=pt-br"}
             />
 
             <div className="bg-paper flex-1 flex flex-col gap-4 p-2 rounded-[4px]">
