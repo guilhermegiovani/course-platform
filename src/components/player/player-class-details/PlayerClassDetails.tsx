@@ -113,7 +113,51 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                 </Tabs.Content>
 
                 <Tabs.Content value="class-comments" className="px-2">
-                    <Comments />
+                    <Comments
+                        comments={[
+                            {
+                                content: 'My comment',
+                                likesCount: 15,
+                                publishDate: '2025-06-10T02:21:46Z',
+                                author: {
+                                    image: 'teste',
+                                    userName: '@GuilhermeGiovaniDev'
+                                },
+                                replies: undefined,
+                            },
+                            {
+                                content: 'My comment',
+                                likesCount: 15,
+                                publishDate: '2025-06-10T02:21:46Z',
+                                author: {
+                                    image: 'teste',
+                                    userName: '@GuilhermeGiovaniDev'
+                                },
+                                replies: [
+                                    {
+                                        content: 'My reply',
+                                        likesCount: 15,
+                                        publishDate: '2025-06-10T02:21:46Z',
+                                        author: {
+                                            image: 'teste',
+                                            userName: '@GuilhermeGiovaniDev'
+                                        },
+                                        replies: undefined,
+                                    },
+                                    {
+                                        content: 'My reply',
+                                        likesCount: 15,
+                                        publishDate: '2025-06-10T02:21:46Z',
+                                        author: {
+                                            image: 'teste',
+                                            userName: '@GuilhermeGiovaniDev'
+                                        },
+                                        replies: undefined,
+                                    },
+                                ]
+                            },
+                        ]}
+                    />
                 </Tabs.Content>
 
                 <Tabs.Content value="course-details" className="px-2">
