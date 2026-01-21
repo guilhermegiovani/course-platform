@@ -1,13 +1,14 @@
 'use client'
 import { IPlayerClassGroupProps } from "../playlist/components/PlayerClassGroup"
-import { PlayerVideoPlayer, PlayerClassHeader, IPlayerVideoPlayerRef } from "@/components/player"
+import { PlayerVideoPlayer, PlayerClassHeader, IPlayerVideoPlayerRef, PlayerPlaylist } from "@/components/player"
 // import { CourseHeader } from "@/components/course-header/CourseHeader"
 import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/navigation"
-import { useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx"
 import { Comments } from "./components/comments/Comments";
 import dynamic from "next/dynamic";
+import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
 
 
 const CourseHeader = dynamic(
@@ -17,32 +18,51 @@ const CourseHeader = dynamic(
 
 interface IPlayerClassDetailsProps {
     course: {
+        id: string
         title: string
         description: string
         numberOfClasses: number
+        classGroups: Pick<IPlayerClassGroupProps, 'classes' | 'title'>[]
     }
 
     classItem: {
+        id: string
+        videoId: string
+        viewsCount: number
+        likesCount: number
+        commentsCount: number
         title: string
         description: string
     }
 
-    playingClassId: string
-    playingCourseId: string
-    classGroups: Pick<IPlayerClassGroupProps, 'classes' | 'title'>[]
 }
 
-export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroups, course, classItem }: IPlayerClassDetailsProps) => {
+// playingClassId, playingCourseId, classGroups,
+export const PlayerClassDetails = ({ course, classItem }: IPlayerClassDetailsProps) => {
     const router = useRouter()
 
     const playerVideoPlayerRef = useRef<IPlayerVideoPlayerRef>(null)
 
+    const [currentTab, setCurrentTab] = useState("class-details")
+
     // playerVideoPlayerRef.current?.setProgress
+    useEffect(() => {
+        const matchMedia = window.matchMedia("(min-width: 768px)")
+
+        const handleMatchMedia = (e: MediaQueryListEvent) => {
+            if(e.matches && currentTab === 'course-playlist') {
+                setCurrentTab("class-details")
+            }
+        }
+
+        matchMedia.addEventListener('change', handleMatchMedia)
+        return () => matchMedia.removeEventListener('change', handleMatchMedia)
+    }, [currentTab])
 
     const nextClassId = useMemo(() => {
-        const classes = classGroups.flatMap(classGroup => classGroup.classes)
+        const classes = course.classGroups.flatMap(classGroup => classGroup.classes)
 
-        const currentClassIndex = classes.findIndex(classItem => classItem.classId === playingClassId)
+        const currentClassIndex = classes.findIndex(({classId}) => classId === classItem.id)
 
         const nextClassIndex = currentClassIndex + 1
 
@@ -52,7 +72,7 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
 
         return classes[nextClassIndex].classId
 
-    }, [classGroups, playingClassId])
+    }, [course.classGroups, classItem.id])
 
     return (
         <div className="flex-1 overflow-auto pb-10">
@@ -64,12 +84,32 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
             <div className="flex-1 aspect-video">
                 <PlayerVideoPlayer
                     ref={playerVideoPlayerRef}
-                    videoId='bP47qRVRqQs'
-                    onPlayNext={() => nextClassId ? router.push(`/player/${playingCourseId}/${nextClassId}`) : {}}
+                    videoId={classItem.videoId}
+                    onPlayNext={() => nextClassId ? router.push(`/player/${course.id}/${nextClassId}`) : {}}
                 />
             </div>
 
-            <Tabs.Root defaultValue="class-details">
+            <div className="flex gap-2 p-2 opacity-50">
+                <div className="flex gap-1 items-center">
+                    <MdVisibility />
+                    <span>{classItem.viewsCount}</span>
+                    <span>visualizações</span>
+                </div>
+
+                <a className="flex gap-1 items-center" target="_blank" href={`https://www.youtube.com/watch?v=${classItem.videoId}`}>
+                    <MdThumbUp />
+                    <span>{classItem.likesCount}</span>
+                    <span>curtidas</span>
+                </a>
+
+                <div className="flex gap-1 items-center">
+                    <MdComment />
+                    <span>{classItem.commentsCount}</span>
+                    <span>comentários</span>
+                </div>
+            </div>
+
+            <Tabs.Root value={currentTab} onValueChange={value => setCurrentTab(value)}>
                 <Tabs.List className="flex gap-4">
                     <Tabs.Trigger
                         value="class-details"
@@ -79,6 +119,16 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                         )}
                     >
                         Visão geral
+                    </Tabs.Trigger>
+
+                    <Tabs.Trigger
+                        value="course-playlist"
+                        className={clsx(
+                            "p-2 flex items-center justify-center",
+                            "border-b-4 border-transparent data-[state=active]:border-primary cursor-pointer md:hidden"
+                        )}
+                    >
+                        Conteúdo do curso
                     </Tabs.Trigger>
 
                     <Tabs.Trigger
@@ -109,6 +159,14 @@ export const PlayerClassDetails = ({ playingClassId, playingCourseId, classGroup
                         title={classItem.title}
                         description={classItem.description}
                         onTimeClick={seconds => playerVideoPlayerRef.current?.setProgress(seconds)}
+                    />
+                </Tabs.Content>
+
+                <Tabs.Content value="course-playlist" className="px-2">
+                    <PlayerPlaylist
+                        playingClassId={classItem.id}
+                        playingCourseId={course.id}
+                        classGroups={course.classGroups}
                     />
                 </Tabs.Content>
 
