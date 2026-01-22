@@ -4,6 +4,7 @@ import { MdShare } from "react-icons/md"
 import { CollapsibleText } from "./components/CollapsibleText"
 import clsx from "clsx"
 import { CopyContent } from "./components/CopyContent"
+import { useMemo } from "react"
 
 
 interface ICourseHeaderProps {
@@ -14,6 +15,10 @@ interface ICourseHeaderProps {
 
 
 export const CourseHeader = ({ title, description, numberOfClasses }: ICourseHeaderProps) => {
+    const url = useMemo(() => {
+        if (typeof window === "undefined") return ""
+        return window.location.href
+    }, [])
 
     return (
         <div className="flex flex-col gap-2">
@@ -26,7 +31,7 @@ export const CourseHeader = ({ title, description, numberOfClasses }: ICourseHea
             </CollapsibleText>
 
             <div className="flex gap-3 items-center">
-                <CopyContent title="Copie o conteúdo abaixo" content={window.location.href}>
+                <CopyContent title="Copie o conteúdo abaixo" content={url}>
                     <button className={clsx(
                         "py-2 px-4 bg-paper rounded-full cursor-pointer",
                         "flex items-center gap-2"

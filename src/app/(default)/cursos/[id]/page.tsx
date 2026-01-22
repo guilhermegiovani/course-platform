@@ -1,16 +1,16 @@
-import { Metadata } from "next";
 // import { CourseHeader } from "@/components/course-header/CourseHeader";
+import { Metadata } from "next";
 import { StartCourse } from "@/components/startcourse/StartCourse";
-import clsx from "clsx";
 import { CourseContent } from "@/components/course-content/CourseContent";
 import { APIYouTube } from "@/shared/services/api-youtube";
-import dynamic from "next/dynamic";
+import clsx from "clsx";
+import CourseHeader from "@/components/course-header/CourseHeader.client";
 
 
-const CourseHeader = dynamic(
-    import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
-    { ssr: false }
-)
+// const CourseHeader = dynamic(
+//     () => import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
+//     { ssr: false, loading: CourseHeaderLoading }
+// )
 
 interface Props {
     // params: Promise<{ id: string }>

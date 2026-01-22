@@ -7,14 +7,13 @@ import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx"
 import { Comments } from "./components/comments/Comments";
-import dynamic from "next/dynamic";
 import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
+import CourseHeader from "@/components/course-header/CourseHeader.client";
 
-
-const CourseHeader = dynamic(
-    import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
-    { ssr: false }
-)
+// const CourseHeader = dynamic(
+//     () => import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
+//     { ssr: false, loading: CourseHeaderLoading }
+// )
 
 interface IPlayerClassDetailsProps {
     course: {
