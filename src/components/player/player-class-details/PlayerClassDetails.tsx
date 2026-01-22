@@ -9,6 +9,7 @@ import clsx from "clsx"
 import { Comments } from "./components/comments/Comments";
 import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
 import CourseHeader from "@/components/course-header/CourseHeader.client";
+import { ICommentProps } from "./components/comments/Comment";
 
 // const CourseHeader = dynamic(
 //     () => import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
@@ -34,10 +35,12 @@ interface IPlayerClassDetailsProps {
         description: string
     }
 
+    comments: ICommentProps[]
+
 }
 
 // playingClassId, playingCourseId, classGroups,
-export const PlayerClassDetails = ({ course, classItem }: IPlayerClassDetailsProps) => {
+export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClassDetailsProps) => {
     const router = useRouter()
 
     const playerVideoPlayerRef = useRef<IPlayerVideoPlayerRef>(null)
@@ -171,49 +174,7 @@ export const PlayerClassDetails = ({ course, classItem }: IPlayerClassDetailsPro
 
                 <Tabs.Content value="class-comments" className="px-2">
                     <Comments
-                        comments={[
-                            {
-                                content: 'My comment',
-                                likesCount: 15,
-                                publishDate: '2025-06-10T02:21:46Z',
-                                author: {
-                                    image: 'teste',
-                                    userName: '@GuilhermeGiovaniDev'
-                                },
-                                replies: undefined,
-                            },
-                            {
-                                content: 'My comment',
-                                likesCount: 15,
-                                publishDate: '2025-06-10T02:21:46Z',
-                                author: {
-                                    image: 'teste',
-                                    userName: '@GuilhermeGiovaniDev'
-                                },
-                                replies: [
-                                    {
-                                        content: 'My reply',
-                                        likesCount: 15,
-                                        publishDate: '2025-06-10T02:21:46Z',
-                                        author: {
-                                            image: 'teste',
-                                            userName: '@GuilhermeGiovaniDev'
-                                        },
-                                        replies: undefined,
-                                    },
-                                    {
-                                        content: 'My reply',
-                                        likesCount: 15,
-                                        publishDate: '2025-06-10T02:21:46Z',
-                                        author: {
-                                            image: 'teste',
-                                            userName: '@GuilhermeGiovaniDev'
-                                        },
-                                        replies: undefined,
-                                    },
-                                ]
-                            },
-                        ]}
+                        comments={comments}
                     />
                 </Tabs.Content>
 

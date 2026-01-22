@@ -29,6 +29,10 @@ export const APIYouTube = {
             return courses.filter(course => course.description?.includes('#CODARSE'))
         },
         getById: async (id: string) => {
+            if (!id) {
+                throw new Error('Course id is required')
+            }
+
             const { data: { items: [courseItem] = [] } } = await YouTubeAPIClient.playlists.list({
                 id: [id],
                 maxResults: 1,
@@ -44,13 +48,13 @@ export const APIYouTube = {
                         playlistId: id,
                         part: ['snippet'],
                         pageToken: nextPageToken
-                    }, { fetchImplementation: fetchWithNextConfig({ revalidate: (60 * 60) *24 }) })
-                    .then(({data}) => {
+                    }, { fetchImplementation: fetchWithNextConfig({ revalidate: (60 * 60) * 24 }) })
+                    .then(({ data }) => {
                         classes.push(...(data.items || []))
                         nextPageToken = data.nextPageToken || undefined
                     })
             } while (nextPageToken)
-            
+
             type TGroupWithClass = {
                 title: string,
                 courseId: string,
@@ -73,7 +77,7 @@ export const APIYouTube = {
                     const previousGroup = previous.at(previous.length - 1)
                     const previousGroupTitle = previousGroup?.title
 
-                    if(previousGroup && previousGroupTitle === currentGroupTitle) {
+                    if (previousGroup && previousGroupTitle === currentGroupTitle) {
                         previousGroup.classes.push({
                             id: current.id,
                             title: current.title
@@ -138,7 +142,7 @@ export const APIYouTube = {
             )
 
             const videoId = classItem.contentDetails?.videoId
-            if(!videoId) throw new Error("Video id not found")
+            if (!videoId) throw new Error("Video id not found")
 
             const { data: { items: [videoItem] = [] } } = await YouTubeAPIClient.videos.list({
                 id: [videoId],
@@ -146,8 +150,8 @@ export const APIYouTube = {
                 part: ['snippet', 'statistics']
             }, { fetchImplementation: fetchWithNextConfig({ revalidate: (60 * 60) * 48 }) })
 
-            if(!videoItem.snippet) throw new Error("Snippet not found")
-            if(!videoItem.statistics) throw new Error("Statistics not found")
+            if (!videoItem.snippet) throw new Error("Snippet not found")
+            if (!videoItem.statistics) throw new Error("Statistics not found")
 
             return {
                 videoId,
@@ -158,6 +162,33 @@ export const APIYouTube = {
                 commentsCount: Number(videoItem.statistics.commentCount),
             }
         }
+    },
+    comments: {
+        getAllByVideoId: async (videoId: string) => {
+            const { data } = await YouTubeAPIClient.commentThreads.list({
+                videoId,
+                maxResults: 50,
+                part: ['snippet', 'replies']
+            }, { fetchImplementation: fetchWithNextConfig({ revalidate: (60 * 60) * 8 }) })
 
+            return (data.items || []).map(threadComment => ({
+                likesCount: threadComment.snippet?.topLevelComment?.snippet?.likeCount || 0,
+                content: threadComment.snippet?.topLevelComment?.snippet?.textOriginal || '',
+                publishDate: threadComment.snippet?.topLevelComment?.snippet?.publishedAt || '',
+                author: {
+                    userName: threadComment.snippet?.topLevelComment?.snippet?.authorDisplayName || '',
+                    image: threadComment.snippet?.topLevelComment?.snippet?.authorProfileImageUrl || '',
+                },
+                replies: (threadComment.replies?.comments || []).map(reply => ({
+                    likesCount: reply.snippet?.likeCount || 0,
+                    content: reply.snippet?.textOriginal || '',
+                    publishDate: reply.snippet?.publishedAt || '',
+                    author: {
+                    userName: reply.snippet?.authorDisplayName || '',
+                    image: reply.snippet?.authorProfileImageUrl || '',
+                }
+                }))
+            }))
+        }
     }
 }

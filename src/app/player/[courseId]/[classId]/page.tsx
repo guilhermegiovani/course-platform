@@ -1,4 +1,6 @@
 
+export const dynamic = 'force-dynamic'
+
 import { PlayerClassDetails, PlayerHeader, PlayerPlaylist } from "@/components/player"
 import { APIYouTube } from "@/shared/services/api-youtube"
 import { Metadata } from "next"
@@ -10,17 +12,17 @@ interface Props {
     }
 }
 
-export async function generateStaticParams(): Promise<Props['params'][]> {
-    const courses = await APIYouTube.course.getAll()
+// export async function generateStaticParams(): Promise<Props['params'][]> {
+//     const courses = await APIYouTube.course.getAll()
 
-    const classesByCourse = await Promise.all([
-        ...courses.map(course => APIYouTube.class.getAllByCourseId(course.id))
-    ])
+//     const classesByCourse = await Promise.all([
+//         ...courses.map(course => APIYouTube.class.getAllByCourseId(course.id))
+//     ])
 
-    return classesByCourse
-        .flatMap(classes => classes)
-        .map(classItem => ({ courseId: classItem.courseId, classId: classItem.id }))
-}
+//     return classesByCourse
+//         .flatMap(classes => classes)
+//         .map(classItem => ({ courseId: classItem.courseId, classId: classItem.id }))
+// }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const classDetails = await APIYouTube.class.getById(params.classId)
@@ -41,6 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PagePlayer({ params: { courseId, classId } }: Props) {
     const courseDetails = await APIYouTube.course.getById(courseId)
     const classDetails = await APIYouTube.class.getById(classId)
+
+    const comments = await APIYouTube.comments.getAllByVideoId(classDetails.videoId)
 
     const classGroupsData = courseDetails.classGroups.map(classGroup => ({
         title: classGroup.title,
@@ -70,6 +74,7 @@ export default async function PagePlayer({ params: { courseId, classId } }: Prop
                 <PlayerClassDetails
                     course={{ ...courseDetails, classGroups: classGroupsData }}
                     classItem={{ ...classDetails, id: classId}}
+                    comments={comments}
                 />
             </div>
         </main>
