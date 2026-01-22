@@ -1,4 +1,5 @@
 // import { Interweave } from "interweave"
+'use client'
 import dynamic from "next/dynamic"
 import { UrlMatcher } from 'interweave-autolink'
 import { useMemo } from "react"
