@@ -20,32 +20,38 @@ export const PlayerClass = ({ title, playing, done, onPlay, onCheck }: IPlayerCl
             className="flex gap-6 p-4 items-center cursor-pointer"
             onClick={() => onPlay()}
         >
-            {!done && (
-                <div
-                    className="group cursor-pointer"
-                    onClick={e => {
-                        e.stopPropagation()
-                        onCheck()
-                    }}
-                >
-                    <MdPlayCircleOutline
+            <div
+                className="group cursor-pointer"
+                onClick={e => {
+                    e.stopPropagation()
+                    onCheck()
+                }}
+            >
+                {!done ? (
+                    <>
+                        <MdPlayCircleOutline
+                            size={24}
+                            className="min-w-6 group-hover:hidden"
+                        />
+                        <MdCircle
+                            size={24}
+                            className="min-w-6 hidden group-hover:block"
+                        />
+                    </>
+                ) : (
+                    <MdCheckCircle
                         size={24}
-                        className="min-w-6 group-hover:hidden"
+                        className="min-w-6 text-green-400"
                     />
+                )}
+            </div>
 
-                    <MdCircle
-                        size={24}
-                        className="min-w-6 hidden group-hover:block"
-                    />
-                </div>
-            )}
-
-            {done && (
+            {/* {done && (
                 <MdCheckCircle
                     size={24}
                     className="min-w-6 text-green-400"
                 />
-            )}
+            )} */}
 
             <div className="flex flex-col gap-1 items-start">
                 <p

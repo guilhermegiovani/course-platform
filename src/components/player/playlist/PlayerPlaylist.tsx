@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { IPlayerClassGroupProps, PlayerClassGroup } from "./components/PlayerClassGroup"
 import { useRouter } from "next/navigation"
+import { LocalStorage } from "@/shared/services/local-storage"
 
 
 interface IPlayerPlaylistProps {
@@ -11,12 +12,40 @@ interface IPlayerPlaylistProps {
 }
 
 export const PlayerPlaylist = ({ classGroups, playingClassId, playingCourseId }: IPlayerPlaylistProps) => {
+    const router = useRouter()
+    
+    // const [watchedContentIds, setWatchedContentIds] = useState<string[] | null>(() => {
+    //     return LocalStorage.watchedContent.get(playingCourseId)
+    // })
+    const [watchedContentIds, setWatchedContentIds] = useState<string[]>([])
     const [openedIndex, setOpenedIndex] = useState<number | undefined>(
         classGroups.findIndex((classGroup) => classGroup.classes.some(classItem => classItem.classId === playingClassId))
     )
 
-    const router = useRouter()
+    useEffect(() => {
+        const watchedContent = LocalStorage.watchedContent.get(playingCourseId)
+        if(!watchedContent) return
 
+        setWatchedContentIds(watchedContent)
+    }, [playingCourseId])
+
+    const classGroupsWithDone = useMemo(() => {
+        return classGroups.map(classGroup => ({
+            ...classGroup,
+            classes: classGroup.classes.map(classItem => ({
+                ...classItem,
+                done: watchedContentIds.includes(classItem.classId)
+            }))
+        }))
+
+    }, [classGroups, watchedContentIds])
+
+    const handleCheck = useCallback((classId: string) => {
+        const newWatchedContent = LocalStorage.watchedContent.toggle(playingCourseId, classId)
+        if(!newWatchedContent) return
+
+        setWatchedContentIds(newWatchedContent)
+    }, [playingCourseId])
 
     return (
         <div className="flex flex-col gap-2 h-full">
@@ -25,17 +54,19 @@ export const PlayerPlaylist = ({ classGroups, playingClassId, playingCourseId }:
             </div>
 
             <ol className="overflow-auto overflow-primary">
-                {classGroups.map((classGroup, index) => (
+                {classGroupsWithDone.map((classGroup, index) => (
                     <li key={classGroup.title}>
                         <PlayerClassGroup
                             {...classGroup}
+
                             playingClassId={playingClassId}
 
                             position={index+1}
                             open={openedIndex === index}
                             onToggle={() => setOpenedIndex(openedIndex === index ? undefined : index)}
+
                             onPlay={(classId) => router.push(`/player/${playingCourseId}/${classId}`)}
-                            onCheck={(classId) => console.log("check", classId)}
+                            onCheck={handleCheck}
                         />
 
                     </li>

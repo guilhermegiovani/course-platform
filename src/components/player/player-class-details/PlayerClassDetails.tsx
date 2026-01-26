@@ -4,7 +4,7 @@ import { PlayerVideoPlayer, PlayerClassHeader, IPlayerVideoPlayerRef, PlayerPlay
 // import { CourseHeader } from "@/components/course-header/CourseHeader"
 import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx"
 import { Comments } from "./components/comments/Comments";
 import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
@@ -86,6 +86,13 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
 
     }, [course.classGroups, classItem.id])
 
+    const handlePlayerNext = useCallback(() => {
+        if(!nextClassId) return
+
+        LocalStorage.watchedContent.toggle(course.id, classItem.id, 'add')
+        router.push(`player/${course.id}/${nextClassId}`)
+    }, [course.id, classItem.id, nextClassId, router])
+
     return (
         <div className="flex-1 overflow-auto pb-10">
 
@@ -97,7 +104,7 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
                 <PlayerVideoPlayer
                     ref={playerVideoPlayerRef}
                     videoId={classItem.videoId}
-                    onPlayNext={() => nextClassId ? router.push(`/player/${course.id}/${nextClassId}`) : {}}
+                    onPlayNext={handlePlayerNext}
                 />
             </div>
 
