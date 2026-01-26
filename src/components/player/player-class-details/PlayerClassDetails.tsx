@@ -10,6 +10,7 @@ import { Comments } from "./components/comments/Comments";
 import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
 import CourseHeader from "@/components/course-header/CourseHeader.client";
 import { ICommentProps } from "./components/comments/Comment";
+import { LocalStorage } from "@/shared/services/local-storage";
 
 // const CourseHeader = dynamic(
 //     () => import("@/components/course-header/CourseHeader").then(res => res.CourseHeader),
@@ -60,6 +61,15 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
         matchMedia.addEventListener('change', handleMatchMedia)
         return () => matchMedia.removeEventListener('change', handleMatchMedia)
     }, [currentTab])
+
+    useEffect(() => {
+        LocalStorage.KeepWatching.set({
+            classId: classItem.id,
+            courseId: course.id,
+            className: classItem.title,
+            courseName: course.title
+        })
+    }, [course.id, course.title, classItem.id, classItem.title])
 
     const nextClassId = useMemo(() => {
         const classes = course.classGroups.flatMap(classGroup => classGroup.classes)

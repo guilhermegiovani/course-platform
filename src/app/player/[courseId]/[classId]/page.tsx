@@ -41,6 +41,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PagePlayer({ params: { courseId, classId } }: Props) {
+    if (!courseId) {
+        return null // ou notFound()
+    }
+
     const courseDetails = await APIYouTube.course.getById(courseId)
     const classDetails = await APIYouTube.class.getById(classId)
 
